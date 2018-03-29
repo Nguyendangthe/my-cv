@@ -84,12 +84,10 @@ var AboutComponent = (function () {
             _this.user.FbLink = data.Social.fbUrl;
             _this.user.GmailLink = data.Social.gmail;
             _this.user.GitHubLink = data.Social.github;
-            console.log(data.Social.fbUrl);
         });
     };
     AboutComponent.prototype.hover_panel = function () {
         $("#panel").slideDown("slow");
-        console.log("ok");
     };
     AboutComponent.prototype.mouseleave_panel = function () {
         $("#panel").slideUp("slow");
@@ -98,13 +96,11 @@ var AboutComponent = (function () {
         this.contact = true;
         this.hoby = false;
         $("#contact_line").slideDown("slow");
-        console.log("ok");
     };
     AboutComponent.prototype.hoby_click = function () {
         this.contact = false;
         this.hoby = true;
         $("#hobbies_line").slideDown("slow");
-        console.log("ok");
     };
     AboutComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -487,7 +483,6 @@ var DashboardComponent = (function () {
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.appServices.authenticateUser().subscribe(function (res) {
-            console.log("authenticate status:" + res.stutus);
             if (res.status != true) {
                 _this.router.navigateByUrl('/home');
             }
@@ -508,7 +503,6 @@ var DashboardComponent = (function () {
         this.skill.BgColor = item.BgColor;
         this.skill.Description = item.Description;
         this.skill.IconUrl = item.IconUrl;
-        console.log("here is skill :" + JSON.stringify(this.skill));
         this.skillServices.updateSkill(_id, this.skill).subscribe(function (res) {
             alert(res.text());
         });
@@ -527,12 +521,21 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.addSkill = function (new_skill) {
         var _this = this;
-        console.log(new_skill);
         this.skillServices.addSkill(new_skill).subscribe(function (res) {
-            console.log(res);
             _this.ngOnInit();
             $('.modal-backdrop').remove();
             $('.modal').remove();
+        });
+    };
+    DashboardComponent.prototype.addExp = function (new_Exp) {
+        var _this = this;
+        this.experienceServices.addExp(new_Exp).subscribe(function (res) {
+            alert(res.text());
+            $('.modal-backdrop').remove();
+            $('.modal').remove();
+            _this.experienceServices.getAllExp().subscribe(function (reload) {
+                _this.dbExperience = reload.expriences;
+            });
         });
     };
     DashboardComponent.prototype.updateExp = function (_id, item) {
@@ -546,8 +549,12 @@ var DashboardComponent = (function () {
         });
     };
     DashboardComponent.prototype.deleteExp = function (_id, CompanyName) {
+        var _this = this;
         this.experienceServices.deleteExp(_id).subscribe(function (res) {
             alert(res.text());
+            _this.experienceServices.getAllExp().subscribe(function (reload) {
+                _this.dbExperience = reload.expriences;
+            });
         });
     };
     DashboardComponent = __decorate([
@@ -576,7 +583,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".root_div{\r\n    /* background-image: -webkit-linear-gradient(-60deg, #2fc5b1 0%, #f43fb8 100%);\r\n    background-image: linear-gradient(-60deg, #2fc5b1 0%, #f43fb8 100%);\r\n     */\r\n    height: 800px;\r\n    /* background-image: url(\"../assets/img/school.png\"); */\r\n}\r\n\r\n.contain_div{\r\n    padding-left: 50px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.contain_div h1{\r\n    margin-left: 0%;    \r\n    margin-bottom: 1cm;\r\n    font-size: 45px;\r\n    font-weight: 700;\r\n    color: white;\r\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    \r\n}\r\n\r\n\r\n.contain_div h2{\r\n    font-size: 25px;\r\n    color: white;\r\n    font-family: 'Nunito', sans-serif;\r\n    font-weight: lighter;\r\n}\r\n\r\n\r\n.contain_div h3{\r\n    font-size: 30px;\r\n    color: white;\r\n    font-family: 'Jura', sans-serif;   \r\n    width: -webkit-fit-content;   \r\n    width: -moz-fit-content;   \r\n    width: fit-content;\r\n\r\n}\r\n\r\n\r\n.title{\r\n    font-size: 35px;\r\n    color: rgb(255, 255, 255);\r\n    font-family: 'Righteous', cursive;\r\n    font-weight: 800px;\r\n}\r\n\r\n@media  screen and (min-width: 375px) and (max-width:480px){\r\n    .contain_div ul{\r\n        margin: -50px;\r\n        padding-top: 35px;\r\n    }\r\n\r\n    .contain_div h3{\r\n        font-size: 20px;\r\n        color: white;\r\n        font-family: 'Jura', sans-serif;   \r\n        width: -webkit-fit-content;   \r\n        width: -moz-fit-content;   \r\n        width: fit-content;\r\n    \r\n    }\r\n\r\n    .title{\r\n        font-size: 23px;\r\n        color: rgb(255, 255, 255);\r\n        font-family: 'Righteous', cursive;\r\n        font-weight: 800px;\r\n    }\r\n  }", ""]);
+exports.push([module.i, ".root_div{\r\n    /* background-image: -webkit-linear-gradient(-60deg, #2fc5b1 0%, #f43fb8 100%);\r\n    background-image: linear-gradient(-60deg, #2fc5b1 0%, #f43fb8 100%);\r\n     */\r\n    height: 800px;\r\n    /* background-image: url(\"../assets/img/school.png\"); */\r\n}\r\n\r\n.contain_div{\r\n    padding-left: 50px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.contain_div h1{\r\n    margin-left: 0%;    \r\n    margin-bottom: 1cm;\r\n    font-size: 45px;\r\n    font-weight: 700;\r\n    color: white;\r\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    \r\n}\r\n\r\n\r\n.contain_div h2{\r\n    font-size: 25px;\r\n    color: white;\r\n    font-family: 'Nunito', sans-serif;\r\n    font-weight: lighter;\r\n}\r\n\r\n\r\n.contain_div h3{\r\n    font-size: 30px;\r\n    color: white;\r\n    font-family: 'Jura', sans-serif;   \r\n    width: -webkit-fit-content;   \r\n    width: -moz-fit-content;   \r\n    width: fit-content;\r\n\r\n}\r\n\r\n\r\n.title{\r\n    font-size: 35px;\r\n    color: rgb(255, 255, 255);\r\n    font-family: 'Righteous', cursive;\r\n    font-weight: 800px;\r\n}\r\n\r\n@media  screen and (min-width: 375px) and (max-width:480px){\r\n    .contain_div div{\r\n       \r\n        padding-top: 35px;\r\n    }\r\n\r\n    .contain_div h3{\r\n        font-size: 20px;\r\n        color: white;\r\n        font-family: 'Jura', sans-serif;   \r\n        width: 100%;\r\n    \r\n    }\r\n\r\n    .title{\r\n        font-size: 23px;\r\n        color: rgb(255, 255, 255);\r\n        font-family: 'Righteous', cursive;\r\n        font-weight: 800px;\r\n    }\r\n  }\r\n\r\n  @media  screen and (min-width: 320px) and (max-width:355px){\r\n    .contain_div div{\r\n       \r\n        padding-top: 35px;\r\n    }\r\n\r\n    .contain_div h3{\r\n        font-size: 20px;\r\n        color: white;\r\n        font-family: 'Jura', sans-serif;   \r\n        width: 100%;\r\n    \r\n    }   \r\n\r\n    .title{\r\n        font-size: 23px;\r\n        color: rgb(255, 255, 255);\r\n        font-family: 'Righteous', cursive;\r\n        font-weight: 800px;\r\n    }\r\n  }", ""]);
 
 // exports
 
@@ -589,7 +596,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/education/education.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"root_div container-fluid\" [ngStyle]=\"{'background-image': 'url(./assets/img/school.png)'}\">\n  <div class=\"contain_div\" >\n      <h1>Education </h1>\n    <ul>\n      <li *ngFor=\"let edu of education\">\n          <div>\n           \n              <h3 style=\"background-color:orange;\"><span class=\"title\">Collage : </span>{{edu.SchoolName}}</h3>\n              <h3 style=\"background-color:rgb(101, 178, 223)\"><span class=\"title\">Time : </span>From {{edu.StartWhen}} to {{edu.EndWhen}}</h3>\n              <h3 style=\"background-color:rgb(128, 24, 138)\"><span class=\"title\">Major : </span>{{edu.Major}}</h3>\n              <h3 style=\"background-color:rgb(219, 40, 100)\"><span class=\"title\">Graduation year : </span>{{edu.GraduationYear}}</h3>\n              <h3 style=\"background-color:rgb(166, 223, 101)\"><span class=\"title\">GPA :</span>{{edu.AverageScore}}</h3>\n          </div>\n         <hr>\n      </li>\n     \n    </ul>\n   \n  </div>\n</div>"
+module.exports = "<div class=\"root_div container-fluid\" [ngStyle]=\"{'background-image': 'url(./assets/img/school.png)'}\">\n  <div class=\"contain_div\" >\n      <h1>Education </h1>\n   \n          <div *ngFor=\"let edu of education\">           \n              <h3 style=\"background-color:orange;\"><span class=\"title\">Collage : </span>{{edu.SchoolName}}</h3>\n              <h3 style=\"background-color:rgb(101, 178, 223)\"><span class=\"title\">Time : </span>From {{edu.StartWhen}} to {{edu.EndWhen}}</h3>\n              <h3 style=\"background-color:rgb(128, 24, 138)\"><span class=\"title\">Major : </span>{{edu.Major}}</h3>\n              <h3 style=\"background-color:rgb(219, 40, 100)\"><span class=\"title\">Graduation year : </span>{{edu.GraduationYear}}</h3>\n              <h3 style=\"background-color:rgb(166, 223, 101)\"><span class=\"title\">GPA :</span>{{edu.AverageScore}}</h3>\n          </div>\n         <hr>\n    \n   \n  </div>\n</div>"
 
 /***/ }),
 
@@ -623,7 +630,6 @@ var EducationComponent = (function () {
         var _this = this;
         this.educationServices.getAllExp().subscribe(function (data) {
             _this.education = data.education;
-            console.log(_this.education[0].SchoolName);
         });
     };
     EducationComponent = __decorate([
@@ -751,7 +757,6 @@ var ExprienceComponent = (function () {
         var _this = this;
         this.exprienceServices.getAllExp().subscribe(function (data) {
             _this.experiences = data.expriences;
-            console.log("exps:" + _this.experiences[1].CompanyName);
         });
     };
     ExprienceComponent = __decorate([
@@ -858,7 +863,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\n  .navbar {   \r\n    /* display:inline-table; */\r\n  display: block;\r\n  border-radius: 0%;\r\n  height: 2.5cm;\r\n  overflow: hidden;\r\n  /* background-color: rgb(90, 208, 216); */\r\n   /* background-image: -webkit-linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);\r\n   background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);  */\r\n   background-image: linear-gradient(-60deg, #34cbd6 0%, #f4d03f 100%);\r\n  position: fixed;\r\n  top: 0;\r\n  width: 100%;\r\n}\r\n\r\n.welcome{\r\n  font-size: 24px;\r\n  color: white;\r\n  font-weight: bold;\r\n}\r\n  \r\n.navbar a {\r\n    float: left;\r\n    display: block;\r\n    color: #ffffffb4;\r\n    text-align: center;\r\n    padding: 14px 16px;\r\n    text-decoration: none;\r\n    /* font-size: 17px; */\r\n  }\r\n  \r\n  .navbar a:hover {\r\n    background: rgba(255, 255, 255, 0.986);\r\n    color: rgb(90, 208, 216);\r\n    border-radius: 8px;\r\n    /* font-size: 18px; */\r\n  }\r\n  \r\n\r\n.brand{\r\n    float: left;\r\n    padding-left: 60px; \r\n}\r\n\r\n.brand p{\r\n    font-size: 45px;   \r\n    float: left;\r\n  }\r\n\r\n  .menu_content {\r\n    float:right;\r\n    padding-right: 120px;\r\n   }\r\n   .menu_content a{\r\n     font-size: 17px; \r\n     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n   }\r\n\r\n  .firstName{\r\n    color: rgb(248, 248, 248);\r\n    font-family: 'Julius Sans One', sans-serif;\r\n    float: right;\r\n  }\r\n  .lastName{\r\n    color: rgb(255, 255, 255);\r\n    font-family: 'Julius Sans One', sans-serif;\r\n   \r\n  }\r\n\r\n  .main {\r\n   \r\n    width: -webkit-fit-content;\r\n   \r\n    width: -moz-fit-content;\r\n   \r\n    width: fit-content;\r\n    padding: 16px;\r\n    margin-top: 2.5cm;\r\n    height: 3200px; /* Used in this example to enable scrolling */\r\n  }\r\n\r\n  .modal-content{\r\n    height: 200px;\r\n    width: 350px;\r\n  }\r\n\r\n  .modal_child{\r\n    margin-top: 50px;\r\n    margin-bottom: 20px;\r\n    margin-left: 20px;\r\n    margin-right: 20px;\r\n  }\r\n\r\n  #login_btn{\r\n    border: transparent;\r\n    background: transparent;\r\n    color: white;\r\n    font-family: 'Yellowtail', cursive;\r\n    font-size: 50px;\r\n  }\r\n  \r\n  @media  screen and (min-width: 750px) and (max-width:1024px){\r\n    .brand{\r\n        padding-top: 15px;\r\n        height: 0.5cm;;\r\n        padding-right: 1.5cm;\r\n        width: 45%\r\n        /* width: 100%; */\r\n    }\r\n\r\n    .menu_content a{\r\n      font-size: 14px;    \r\n      width: 25%;\r\n      /* padding-bottom: 30px;      */\r\n    }\r\n    .brand p{    \r\n      font-size: 18px;     \r\n    }\r\n\r\n    .navbar{\r\n        display: block;\r\n    }\r\n    .menu_content {      \r\n        /* width: 100%;  */\r\n        width: 55%;\r\n        padding-right: 0%;         \r\n        height: 2cm!important;   \r\n        padding-right: 0.75cm;   \r\n       }\r\n    \r\n       .main{\r\n        width: 100%;\r\n        display: block;\r\n        overflow: auto;\r\n       }\r\n  }\r\n\r\n  @media  screen and (min-width: 320px) and (max-width:350px){\r\n      \r\n    .brand{\r\n      height:-webkit-fit-content;\r\n      height:-moz-fit-content;\r\n      height:fit-content;\r\n      width: 100%;\r\n  }\r\n\r\n  #login_btn{\r\n    height: 1cm;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    margin: auto;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n\r\n  }\r\n\r\n  .modal-content{\r\n    width: 80%;\r\n    margin: auto;\r\n  }\r\n\r\n  .menu_content a{\r\n    font-size: 11px!important;  \r\n    margin-bottom: 13px!important;    \r\n    width: 20%!important;\r\n    height: -webkit-fit-content!important;\r\n    height: -moz-fit-content!important;\r\n    height: fit-content!important;\r\n    margin: auto;\r\n  }\r\n\r\n  .navbar{\r\n      display: -webkit-box;\r\n      display: -ms-flexbox;\r\n      display: flex;\r\n      height: 2.5cm!important;\r\n  }\r\n  .menu_content {      \r\n      width: 100%; \r\n      margin: auto;\r\n      padding-right: 0%;\r\n      padding-bottom: 30px;  \r\n      height: 1.5cm!important;      \r\n     }\r\n  }\r\n  \r\n  @media  screen and (min-width: 360px) and (max-width:380px){\r\n  \r\n    .brand{\r\n        height:-webkit-fit-content;\r\n        height:-moz-fit-content;\r\n        height:fit-content;\r\n        width: 100%;\r\n    }\r\n\r\n    #login_btn{\r\n      height: 1cm;\r\n      font-size: 20px;\r\n      text-align: center;\r\n      margin: auto;\r\n      width: -webkit-fit-content;\r\n      width: -moz-fit-content;\r\n      width: fit-content;\r\n\r\n    }\r\n\r\n    .modal-content{\r\n      width: 80%;\r\n      margin: auto;\r\n    }\r\n\r\n    .menu_content a{\r\n      font-size: 11px!important;  \r\n      margin-bottom: 13px!important;    \r\n      width: 20%!important;\r\n      height: -webkit-fit-content!important;\r\n      height: -moz-fit-content!important;\r\n      height: fit-content!important;\r\n      margin: auto;\r\n    }\r\n\r\n    .navbar{\r\n        display: -webkit-box;\r\n        display: -ms-flexbox;\r\n        display: flex;\r\n        height: 2.5cm!important;\r\n    }\r\n    .menu_content {      \r\n        width: 100%; \r\n        margin: auto;\r\n        padding-right: 0%;\r\n        padding-bottom: 30px;  \r\n        height: 1.5cm!important;      \r\n       }\r\n  }\r\n  \r\n  @media  screen and (min-width: 400px) and (max-width:445px){\r\n  \r\n    .brand{\r\n      height:-webkit-fit-content;\r\n      height:-moz-fit-content;\r\n      height:fit-content;\r\n      width: 100%;\r\n  }\r\n\r\n  #login_btn{\r\n    height: 1cm;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    margin: auto;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n\r\n  }\r\n\r\n  .modal-content{\r\n    width: 80%;\r\n    margin: auto;\r\n  }\r\n\r\n  .menu_content a{\r\n    font-size: 13px!important;  \r\n    margin-bottom: 13px!important;    \r\n    width: 20%!important;\r\n    height: -webkit-fit-content!important;\r\n    height: -moz-fit-content!important;\r\n    height: fit-content!important;\r\n    margin: auto;\r\n  }\r\n\r\n  .navbar{\r\n      display: -webkit-box;\r\n      display: -ms-flexbox;\r\n      display: flex;\r\n      height: 2.5cm!important;\r\n  }\r\n  .menu_content {      \r\n      width: 100%; \r\n      margin: auto;\r\n      padding-right: 0%;\r\n      padding-bottom: 30px;  \r\n      height: 1.5cm!important;      \r\n     }\r\n  }", ""]);
+exports.push([module.i, "\r\n  .navbar {   \r\n    /* display:inline-table; */\r\n  display: block;\r\n  border-radius: 0%;\r\n  height: 2.5cm;\r\n  overflow: hidden;\r\n  /* background-color: rgb(90, 208, 216); */\r\n   /* background-image: -webkit-linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);\r\n   background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);  */\r\n   background-image: linear-gradient(-60deg, #34cbd6 0%, #f4d03f 100%);\r\n  position: fixed;\r\n  top: 0;\r\n  width: 100%;\r\n}\r\n\r\n.welcome{\r\n  font-size: 24px;\r\n  color: white;\r\n  font-weight: bold;\r\n}\r\n  \r\n.navbar a {\r\n    float: left;\r\n    display: block;\r\n    color: #ffffffb4;\r\n    text-align: center;\r\n    padding: 14px 16px;\r\n    text-decoration: none;\r\n    /* font-size: 17px; */\r\n  }\r\n  \r\n  .navbar a:hover {\r\n    background: rgba(255, 255, 255, 0.986);\r\n    color: rgb(90, 208, 216);\r\n    border-radius: 8px;\r\n    /* font-size: 18px; */\r\n  }\r\n  \r\n\r\n.brand{\r\n    float: left;\r\n    padding-left: 60px; \r\n}\r\n\r\n.brand p{\r\n    font-size: 45px;   \r\n    float: left;\r\n  }\r\n\r\n  .menu_content {\r\n    float:right;\r\n    padding-right: 120px;\r\n   }\r\n   .menu_content a{\r\n     font-size: 17px; \r\n     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n   }\r\n\r\n  .firstName{\r\n    color: rgb(248, 248, 248);\r\n    font-family: 'Julius Sans One', sans-serif;\r\n    float: right;\r\n  }\r\n  .lastName{\r\n    color: rgb(255, 255, 255);\r\n    font-family: 'Julius Sans One', sans-serif;\r\n   \r\n  }\r\n\r\n  .main {\r\n   \r\n    width: 100%;\r\n    padding: 16px;\r\n    margin-top: 2.5cm;\r\n    height: 3200px; /* Used in this example to enable scrolling */\r\n  }\r\n\r\n  .modal-content{\r\n    height: 200px;\r\n    width: 350px;\r\n  }\r\n\r\n  .modal_child{\r\n    margin-top: 50px;\r\n    margin-bottom: 20px;\r\n    margin-left: 20px;\r\n    margin-right: 20px;\r\n  }\r\n\r\n  #login_btn{\r\n    border: transparent;\r\n    background: transparent;\r\n    color: white;\r\n    font-family: 'Yellowtail', cursive;\r\n    font-size: 50px;\r\n  }\r\n  \r\n  @media  screen and (min-width: 750px) and (max-width:1024px){\r\n    .brand{\r\n        padding-top: 15px;\r\n        height: 0.5cm;;\r\n        padding-right: 1.5cm;\r\n        width: 45%\r\n        /* width: 100%; */\r\n    }\r\n\r\n    .menu_content a{\r\n      font-size: 14px;    \r\n      width: 25%;\r\n      /* padding-bottom: 30px;      */\r\n    }\r\n    .brand p{    \r\n      font-size: 18px;     \r\n    }\r\n\r\n    .navbar{\r\n        display: block;\r\n    }\r\n    .menu_content {      \r\n        /* width: 100%;  */\r\n        width: 55%;\r\n        padding-right: 0%;         \r\n        height: 2cm!important;   \r\n        padding-right: 0.75cm;   \r\n       }\r\n    \r\n       .main{\r\n        width: 100%;\r\n        display: block;\r\n        overflow: auto;\r\n       }\r\n  }\r\n\r\n  @media  screen and (min-width: 320px) and (max-width:350px){\r\n      \r\n    .brand{\r\n      height:-webkit-fit-content;\r\n      height:-moz-fit-content;\r\n      height:fit-content;\r\n      width: 100%;\r\n  }\r\n\r\n  #login_btn{\r\n    height: 1cm;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    margin: auto;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n\r\n  }\r\n\r\n  .modal-content{\r\n    width: 80%;\r\n    margin: auto;\r\n  }\r\n\r\n  .menu_content a{\r\n    font-size: 11px!important;  \r\n    margin-bottom: 13px!important;    \r\n    width: 20%!important;\r\n    height: -webkit-fit-content!important;\r\n    height: -moz-fit-content!important;\r\n    height: fit-content!important;\r\n    margin: auto;\r\n  }\r\n\r\n  .navbar{\r\n      display: -webkit-box;\r\n      display: -ms-flexbox;\r\n      display: flex;\r\n      height: 2.5cm!important;\r\n  }\r\n  .menu_content {      \r\n      width: 100%; \r\n      margin: auto;\r\n      padding-right: 0%;\r\n      padding-bottom: 30px;  \r\n      height: 1.5cm!important;      \r\n     }\r\n  }\r\n  \r\n  @media  screen and (min-width: 360px) and (max-width:380px){\r\n  \r\n    .brand{\r\n        height:-webkit-fit-content;\r\n        height:-moz-fit-content;\r\n        height:fit-content;\r\n        width: 100%;\r\n    }\r\n\r\n    #login_btn{\r\n      height: 1cm;\r\n      font-size: 20px;\r\n      text-align: center;\r\n      margin: auto;\r\n      width: -webkit-fit-content;\r\n      width: -moz-fit-content;\r\n      width: fit-content;\r\n\r\n    }\r\n\r\n    .modal-content{\r\n      width: 80%;\r\n      margin: auto;\r\n    }\r\n\r\n    .menu_content a{\r\n      font-size: 11px!important;  \r\n      margin-bottom: 13px!important;    \r\n      width: 20%!important;\r\n      height: -webkit-fit-content!important;\r\n      height: -moz-fit-content!important;\r\n      height: fit-content!important;\r\n      margin: auto;\r\n    }\r\n\r\n    .navbar{\r\n        display: -webkit-box;\r\n        display: -ms-flexbox;\r\n        display: flex;\r\n        height: 2.5cm!important;\r\n    }\r\n\r\n    .menu_content {      \r\n        width: 100%; \r\n        margin: auto;\r\n        padding-right: 0%;\r\n        padding-bottom: 30px;  \r\n        height: 1.5cm!important;      \r\n       }\r\n\r\n       \r\n  }\r\n  \r\n  @media  screen and (min-width: 400px) and (max-width:445px){\r\n  \r\n    .brand{\r\n      height:-webkit-fit-content;\r\n      height:-moz-fit-content;\r\n      height:fit-content;\r\n      width: 100%;\r\n  }\r\n\r\n  #login_btn{\r\n    height: 1cm;\r\n    font-size: 20px;\r\n    text-align: center;\r\n    margin: auto;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n\r\n  }\r\n\r\n  .modal-content{\r\n    width: 80%;\r\n    margin: auto;\r\n  }\r\n\r\n  .menu_content a{\r\n    font-size: 13px!important;  \r\n    margin-bottom: 13px!important;    \r\n    width: 20%!important;\r\n    height: -webkit-fit-content!important;\r\n    height: -moz-fit-content!important;\r\n    height: fit-content!important;\r\n    margin: auto;\r\n  }\r\n\r\n  .navbar{\r\n      display: -webkit-box;\r\n      display: -ms-flexbox;\r\n      display: flex;\r\n      height: 2.5cm!important;\r\n  }\r\n  .menu_content {      \r\n      width: 100%; \r\n      margin: auto;\r\n      padding-right: 0%;\r\n      padding-bottom: 30px;  \r\n      height: 1.5cm!important;      \r\n     }\r\n  }", ""]);
 
 // exports
 
@@ -913,7 +918,6 @@ var MainpageComponent = (function () {
     MainpageComponent.prototype.login = function () {
         var _this = this;
         this.appService.logIn(this.user).subscribe(function (data) {
-            console.log(data);
             _this.appService.storeUserData(data.token, data.user);
             _this.router.navigateByUrl('/dashboard');
             $('.modal-backdrop').remove();
@@ -1002,7 +1006,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".navbar{\r\n    position: fixed;\r\n}.root_div{\r\n    background-image: linear-gradient(-60deg, rgb(233, 230, 59), rgb(141, 31, 86));\r\n    \r\n    min-height: 800px;\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n   \r\n}\r\n\r\n.contain_div{\r\n    padding-left: 50px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.contain_div h1{\r\n    margin-left: 0%;    \r\n    margin-bottom: 1cm;\r\n    font-size: 45px;\r\n    font-weight: 700;\r\n    color: white;\r\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    \r\n}\r\n\r\n\r\n.sectionLink {\r\n    margin-top: 100px;\r\n    width: 100%;\r\n    height: 250px;\r\n    display: block;\r\n    border-radius: 13px;\r\n    text-align: center;\r\n    transition: all .3s ease-in-out;\r\n    box-shadow: 0 4px 0 rgba(0,0,0,.1);\r\n    background: crimson;\r\n}\r\n\r\n\r\n\r\n.sectionLink .linkIcon {\r\n    width: 100px;\r\n    height: 100px;\r\n    border-radius: 100%;\r\n    background-color: #fff;\r\n    border-width: 4px;\r\n    border-style: solid;\r\n    margin-top: -50px;\r\n    font-size: 30px;\r\n    line-height: 90px;\r\n    color: rgb(239, 245, 247);\r\n}\r\n\r\n.sectionLink .linkText {\r\n    line-height: 190px;\r\n    display: block;\r\n    font-family: 'Jura', sans-serif;\r\n\r\n    font-size: 32px;\r\n    font-weight: 400;\r\n    color: #fff;\r\n    letter-spacing: 1px;\r\n}\r\n\r\n.sectionLink .content{\r\n    font-size: 20px;\r\n    color: white;\r\n    font-family: 'Righteous', cursive;\r\n\r\n}\r\n\r\n.contain_div li{\r\ndisplay: block;\r\nheight: 250px;\r\nwidth: 300px;\r\n}\r\n\r\n.contain_div ul{\r\n    display: inline;\r\n}", ""]);
+exports.push([module.i, ".navbar{\r\n    position: fixed;\r\n}.root_div{\r\n    /* background-image: -webkit-linear-gradient(-60deg, rgb(233, 230, 59), rgb(141, 31, 86));\r\n    background-image: linear-gradient(-60deg, rgb(233, 230, 59), rgb(141, 31, 86)); */\r\n    background-color: white;\r\n    min-height: 800px;\r\n    height: -webkit-fit-content;\r\n    height: -moz-fit-content;\r\n    height: fit-content;\r\n   \r\n}\r\n\r\n.contain_div{\r\n    padding-left: 50px;\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.contain_div h1{\r\n    margin-left: 0%;    \r\n    margin-bottom: 1cm;\r\n    font-size: 45px;\r\n    font-weight: 700;\r\n    color: black;\r\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    \r\n}\r\n\r\n\r\n.sectionLink {\r\n    margin-top: 100px;\r\n    width: 100%;\r\n    height: 250px;\r\n    display: block;\r\n    border-radius: 13px;\r\n    text-align: center;\r\n    transition: all .3s ease-in-out;\r\n    box-shadow: 0 4px 0 rgba(0,0,0,.1);\r\n    background: crimson;\r\n}\r\n\r\n\r\n\r\n.sectionLink .linkIcon {\r\n    width: 100px;\r\n    height: 100px;\r\n    border: rgb(199, 183, 183);\r\n    border-radius: 100%;\r\n    background-color: #fff;\r\n    border-width: 4px;\r\n    border-style: solid;\r\n    margin-top: -50px;\r\n    font-size: 30px;\r\n    line-height: 90px;\r\n    color: rgb(239, 245, 247);\r\n}\r\n\r\n.sectionLink .linkText {\r\n    line-height: 190px;\r\n    display: block;\r\n    font-family: 'Jura', sans-serif;\r\n\r\n    font-size: 32px;\r\n    font-weight: 400;\r\n    color: #fff;\r\n    letter-spacing: 1px;\r\n}\r\n\r\n.sectionLink .content{\r\n    font-size: 20px;\r\n    color: white;\r\n    font-family: 'Righteous', cursive;\r\n\r\n}\r\n\r\n.contain_div li{\r\ndisplay: block;\r\nheight: 250px;\r\nwidth: 300px;\r\n}\r\n\r\n.contain_div ul{\r\n    display: inline;\r\n}", ""]);
 
 // exports
 
@@ -1055,7 +1059,6 @@ var SkillsComponent = (function () {
         this.skillServices.getAllSkill().subscribe(function (data) {
             _this.skills = data.skills;
             _this.skillServices.storeSkillData(_this.skills);
-            console.log(_this.skills);
         });
     };
     SkillsComponent.prototype.setBgColor = function () {
@@ -1121,7 +1124,6 @@ var SkillServices = (function () {
     };
     SkillServices.prototype.loadSkillsData = function () {
         var skills = JSON.parse(localStorage.getItem('skills'));
-        console.log(skills);
         return skills;
     };
     SkillServices.prototype.updateSkill = function (_id, skill_updated) {
